@@ -5,6 +5,8 @@ import './app.css';
 import Board from './components/Board';
 import Settings from './components/Settings';
 import Info from './components/Info';
+// Helper
+import { chechWinnerO, checkWinnerX } from './helper';
 
 const App = () => {
   const [scoreX, setScoreX] = useState(0);
@@ -20,7 +22,10 @@ const App = () => {
   ])
 
   const restartGame = () => {
-
+    setScoreO(0);
+    setScoreX(0);
+    setGame(['', '', '', '', '', '', '', '', '']);
+    setTurnX(true);
   }
 
   const changeTurn = (index) => {
@@ -29,8 +34,26 @@ const App = () => {
       newArray[index] = turnX ? 'X' : 'O';
       setGame(newArray);
       setTurnX(!turnX);
+
+      checkWinners(newArray);
     }else{
       return;
+    }
+  }
+
+  const checkWinners = (arr) => {
+    if(checkWinnerX(arr)){
+      alert('Winner is X');
+      const emptyArray = ['', '', '', '', '', '', '', '', ''];
+      setGame(emptyArray);
+      setScoreX(scoreX + 1);
+      setTurnX(true);
+    }else if(chechWinnerO(arr)){
+      alert('Winner is O');
+      const emptyArray = ['', '', '', '', '', '', '', '', ''];
+      setGame(emptyArray);
+      setScoreO(scoreO + 1);
+      setTurnX(true);
     }
   }
 
