@@ -2,31 +2,25 @@ import React from 'react';
 // Box
 import Box from './Box';
 
-const Board = ({ turn, changeTurn, boxes }) => {
+const Board = ({ boxes, makeTurn }) => {
+
+  const renderBox = (i) => {
+    return <Box value={boxes[i]} num={i} makeTurn={makeTurn} />;
+  }
+
   return (
     <div className='board'>
-      {boxes.map((i, index) => {
-        return (
-          <Box
-            key={index}
-            index={index}
-            turn={turn} 
-            text={i} 
-            changeTurn={changeTurn}
-          />
-        )
-      })}
-      {/* <Box turn={turn} changeTurn={changeTurn} />
-      <Box turn={turn} changeTurn={changeTurn} />
-      <Box turn={turn} changeTurn={changeTurn} />
+      {renderBox(0)}
+      {renderBox(1)}
+      {renderBox(2)}
 
-      <Box turn={turn} changeTurn={changeTurn} />
-      <Box turn={turn} changeTurn={changeTurn} />
-      <Box turn={turn} changeTurn={changeTurn} />
+      {renderBox(3)}
+      {renderBox(4)}
+      {renderBox(5)}
 
-      <Box turn={turn} changeTurn={changeTurn} />
-      <Box turn={turn} changeTurn={changeTurn} />
-      <Box turn={turn} changeTurn={changeTurn} /> */}
+      {renderBox(6)}
+      {renderBox(7)}
+      {renderBox(8)}
     </div>
   );
 }

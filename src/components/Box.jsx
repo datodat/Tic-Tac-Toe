@@ -1,21 +1,12 @@
 import React, { useState } from 'react';
 
-const Box = ({ turn, index, text, changeTurn }) => {
-  // const [text, setText] = useState('');
-
-  // const checkTurn = () => {
-  //   if(turn){
-  //     setText('X');
-  //     changeTurn();
-  //   }else{
-  //     setText('O')
-  //     changeTurn();
-  //   }
-  // }
-
+const Box = ({ value, num, makeTurn }) => {
   return (
-    <div onClick={() => changeTurn(index)} >
-      {text}
+    <div 
+      className={value === 'X' ? 'boxX' : 'boxO'}
+      onClick={() => makeTurn(num)} 
+    >
+      {value}
     </div>
   );
 }

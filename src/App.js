@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // Css
 import './app.css';
 // Components
@@ -6,54 +6,77 @@ import Board from './components/Board';
 import Settings from './components/Settings';
 import Info from './components/Info';
 // Helper
-import { chechWinnerO, checkWinnerX } from './helper';
+import { checkWinner } from './helper';
 
 const App = () => {
   const [scoreX, setScoreX] = useState(0);
   const [scoreO, setScoreO] = useState(0);
   const [draw, setDraw] = useState(0);
 
-  const [turnX, setTurnX] = useState(true);
+  const [notification, setNotification] = useState('');
 
-  const [game, setGame] = useState([
-    '', '', '',
-    '', '', '',
-    '', '', '',
-  ])
+  const [turnX, setTurnX] = useState(true);
+  
+  const [count, setCount] = useState(0);
+
+  const [game, setGame] = useState(Array(9).fill(null));
+
+  useEffect(() => {
+    checkWinners(game);
+  });
 
   const restartGame = () => {
     setScoreO(0);
     setScoreX(0);
-    setGame(['', '', '', '', '', '', '', '', '']);
+    setDraw(0);
+    setCount(0);
+    setGame(Array(9).fill(null));
     setTurnX(true);
   }
 
-  const changeTurn = (index) => {
-    if(game[index] === ''){
+  const makeTurn = (index) => {
+    if(game[index] === null && 
+       notification === ''){
       const newArray = [...game];
       newArray[index] = turnX ? 'X' : 'O';
       setGame(newArray);
       setTurnX(!turnX);
-
-      checkWinners(newArray);
+      setCount(count + 1);
     }else{
       return;
     }
   }
 
   const checkWinners = (arr) => {
-    if(checkWinnerX(arr)){
-      alert('Winner is X');
-      const emptyArray = ['', '', '', '', '', '', '', '', ''];
-      setGame(emptyArray);
-      setScoreX(scoreX + 1);
-      setTurnX(true);
-    }else if(chechWinnerO(arr)){
-      alert('Winner is O');
-      const emptyArray = ['', '', '', '', '', '', '', '', ''];
-      setGame(emptyArray);
-      setScoreO(scoreO + 1);
-      setTurnX(true);
+    if(checkWinner(arr) === 'X'){
+      setNotification('Winner X!');
+      setTimeout(() => {
+        setGame(Array(9).fill(null));
+        setScoreX(scoreX + 1);
+        setTurnX(true);
+        setCount(0);
+        setNotification('');
+      }, 3000);
+    }else if(checkWinner(arr) === 'O'){
+      setNotification('Winner O!');
+      setTimeout(() => {
+        setGame(Array(9).fill(null));
+        setScoreO(scoreX + 1);
+        setTurnX(true);
+        setCount(0);
+        setNotification('');
+      }, 3000);
+    }else if(count === 9){
+      setNotification('Draw!');
+      setTimeout(() => {
+        setGame(Array(9).fill(null));
+        setDraw(draw + 1);
+        setTurnX(true);
+        setCount(0);
+        setNotification('');
+      }, 3000);
+    }else{
+      return;
     }
   }
 
@@ -62,12 +85,13 @@ const App = () => {
       <div className='game-div'>
         <Settings
           turn={turnX}
+          notification={notification}
           restartGame={restartGame}
         />
         <Board
           boxes={game}
           turn={turnX}
-          changeTurn={changeTurn}
+          makeTurn={makeTurn}
         />
         <Info 
           scoreO={scoreO} 

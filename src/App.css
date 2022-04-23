@@ -43,6 +43,12 @@ body {
   font-family: 'Montserrat';
   color: #FFF;
 }
+.notification-div {
+  font-size: 22px;
+  letter-spacing: 1px;
+  font-family: 'Rowdies';
+  color: rgb(17, 217, 107);
+}
 .settings-restart > button {
   border: none;
   border-radius: 8px;
@@ -88,7 +94,6 @@ body {
 
   font-size: 55px;
   font-family: 'Rowdies';
-  /* color: rgb(190, 190, 120); */
   padding: 16px;
 }
 .boxX {
