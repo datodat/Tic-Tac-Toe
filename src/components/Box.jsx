@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 const Box = ({ value, num, makeTurn }) => {
   return (
     <div 

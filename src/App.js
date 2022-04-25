@@ -14,11 +14,8 @@ const App = () => {
   const [draw, setDraw] = useState(0);
 
   const [notification, setNotification] = useState('');
-
   const [turnX, setTurnX] = useState(true);
-  
   const [count, setCount] = useState(0);
-
   const [game, setGame] = useState(Array(9).fill(null));
 
   useEffect(() => {
@@ -48,7 +45,8 @@ const App = () => {
   }
 
   const checkWinners = (arr) => {
-    if(checkWinner(arr) === 'X'){
+    const result = checkWinner(arr);
+    if(result === 'X'){
       setNotification('Winner X!');
       setTimeout(() => {
         setGame(Array(9).fill(null));
@@ -56,16 +54,16 @@ const App = () => {
         setTurnX(true);
         setCount(0);
         setNotification('');
-      }, 3000);
-    }else if(checkWinner(arr) === 'O'){
+      }, 2000);
+    }else if(result === 'O'){
       setNotification('Winner O!');
       setTimeout(() => {
         setGame(Array(9).fill(null));
-        setScoreO(scoreX + 1);
+        setScoreO(scoreO + 1);
         setTurnX(true);
         setCount(0);
         setNotification('');
-      }, 3000);
+      }, 2000);
     }else if(count === 9){
       setNotification('Draw!');
       setTimeout(() => {
@@ -74,7 +72,7 @@ const App = () => {
         setTurnX(true);
         setCount(0);
         setNotification('');
-      }, 3000);
+      }, 2000);
     }else{
       return;
     }
@@ -90,7 +88,6 @@ const App = () => {
         />
         <Board
           boxes={game}
-          turn={turnX}
           makeTurn={makeTurn}
         />
         <Info 
