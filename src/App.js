@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // Css
-import './app.css';
+import './App.css';
 // Components
 import Board from './components/Board';
 import Settings from './components/Settings';
